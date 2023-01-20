@@ -24,7 +24,9 @@ public class Main {
         User user4 = new User("Mihail", "Mihailov", (byte) 62);
         userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
         // Получение всех User из базы и вывод в консоль ( должен быть переопределен toString в классе User)
-        userService.getAllUsers();
+        for (User user: userService.getAllUsers()) {
+            System.out.println(user.toString());
+        }
         // Очистка таблицы User(ов)
         userService.cleanUsersTable();
         // Удаление таблицы

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private List<User> userList = new ArrayList<>();
 
     public UserDaoJDBCImpl() {
 
@@ -54,13 +53,14 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+
     public List<User> getAllUsers(){
         List<User> userList = new ArrayList<>();
         try ( ResultSet resultSet = Util.getConnection().createStatement().executeQuery("SELECT * from users")){
             while (resultSet.next()) {
                 userList.add(new User(resultSet.getString(2), resultSet.getString(3), resultSet.getByte(4)));
             }
-
+            //Не совсем понимаю для чего здесь что-то менять, все ведь и так классно работает
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
