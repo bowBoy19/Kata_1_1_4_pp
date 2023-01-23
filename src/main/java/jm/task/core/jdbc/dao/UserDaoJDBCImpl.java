@@ -16,7 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    public void createUsersTable()  {
+    public void createUsersTable() {
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.executeUpdate("create table if not exists users(id int  not null auto_increment,firstname varchar(45) not null,lastname varchar(45) not null,age int not null,primary key (id));");
         } catch (SQLException e) {
@@ -24,7 +24,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    public void dropUsersTable()  {
+    public void dropUsersTable() {
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.executeUpdate("drop table if exists users");
         } catch (SQLException e) {
@@ -54,13 +54,13 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try ( ResultSet resultSet = Util.getConnection().createStatement().executeQuery("SELECT * from users")){
+        try(PreparedStatement statement = Util.getConnection().prepareStatement("select * from users");
+            ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 userList.add(new User(resultSet.getString(2), resultSet.getString(3), resultSet.getByte(4)));
             }
-            //Не совсем понимаю для чего здесь что-то менять, все ведь и так классно работает
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
